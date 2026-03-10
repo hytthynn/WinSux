@@ -2708,10 +2708,6 @@ Remove-WindowsCapability -Online -Name $_.Name | Out-Null
         ## c:\windows\system32\optionalfeatures.exe
 		## powershell -noexit -command "dism /online /get-features /format:table"
 
-# install netfx3
-DISM /Online /Enable-Feature /FeatureName:NetFx3 /All /NoRestart /Quiet
-# install directplay
-DISM /Online /Enable-Feature /FeatureName:DirectPlay /All /NoRestart /Quiet
 Get-WindowsOptionalFeature -Online | Where-Object {
 $_.FeatureName -notlike '*NetFx3*' -and
 $_.FeatureName -notlike '*LegacyComponents*' -and
