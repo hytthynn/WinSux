@@ -2571,7 +2571,7 @@ $WshShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut("$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Recycle Bin.lnk")
 $Shortcut.TargetPath = "$env:SystemRoot\explorer.exe"
 $Shortcut.Arguments = "shell:RecycleBinFolder"
-$Shortcut.IconLocation = "%SystemRoot%\System32\imageres.dll,50"
+$Shortcut.IconLocation = "%SystemRoot%\System32\imageres.dll,265"
 $Shortcut.Save()
 
 # hide accessibility accessories folders and all contents from start menu
