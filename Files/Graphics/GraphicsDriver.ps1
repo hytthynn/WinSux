@@ -245,6 +245,9 @@ Start-Process "winget" -ArgumentList "install `"9NF8H0H7WMLT`" --silent --accept
 # uninstall winget
 Get-AppxPackage -allusers *Microsoft.Winget.Source* | Remove-AppxPackage
 
+# delete download
+Remove-Item "$InstallFile" -Force -ErrorAction SilentlyContinue | Out-Null
+
 # delete old driver files
 Remove-Item "$env:SystemDrive\NVIDIA" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 

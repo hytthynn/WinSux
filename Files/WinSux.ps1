@@ -2050,6 +2050,7 @@ Disable-MMAgent -MemoryCompression -ErrorAction SilentlyContinue | Out-Null
 
 # disable bitlocker
         ## control /name microsoft.bitlockerdriveencryption
+try {
 Get-BitLockerVolume |
 Where-Object {
 $_.ProtectionStatus -eq "On" -or $_.VolumeStatus -ne "FullyDecrypted"
@@ -2057,6 +2058,7 @@ $_.ProtectionStatus -eq "On" -or $_.VolumeStatus -ne "FullyDecrypted"
 ForEach-Object {
 Disable-BitLocker -MountPoint $_.MountPoint -ErrorAction SilentlyContinue | Out-Null
 }
+} catch { }
 
 # smartscreen for microsoft edge - needs normal boot as admin
 cmd /c "reg add `"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Edge\SmartScreenEnabled`" /ve /t REG_DWORD /d `"0`" /f >nul 2>&1"
@@ -2646,14 +2648,16 @@ cmd /c "sc delete `"$($service.Name)`" >nul 2>&1"
 }
 
 # windows 10 remove microsoft edge legacy package
-$edgeLegacyPackage = (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages" -ErrorAction SilentlyContinue |
+try {
+$EdgeLegacyPackage = (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages" -ErrorAction SilentlyContinue |
 Where-Object { $_.PSChildName -like "*Microsoft-Windows-Internet-Browser-Package*~~*" }).PSChildName
-if ($edgeLegacyPackage) {
-$regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\$edgeLegacyPackage"
+if ($EdgeLegacyPackage) {
+$regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\$EdgeLegacyPackage"
 cmd /c "reg add `"$($regPath.Replace('HKLM:\', 'HKLM\'))`" /v Visibility /t REG_DWORD /d 1 /f >nul 2>&1"
 cmd /c "reg delete `"$($regPath.Replace('HKLM:\', 'HKLM\'))\Owners`" /va /f >nul 2>&1"
-dism /online /Remove-Package /PackageName:$edgeLegacyPackage /quiet /norestart
+dism /online /Remove-Package /PackageName:$EdgeLegacyPackage /quiet /norestart
 }
+} catch { }
 
         Write-Host "REMOVE UWP APPS`n"
         ## ms-settings:appsfeatures
@@ -2903,6 +2907,9 @@ Start-Process "winget" -ArgumentList "install `"9NF8H0H7WMLT`" --silent --accept
 
 # uninstall winget
 Get-AppxPackage -allusers *Microsoft.Winget.Source* | Remove-AppxPackage
+
+# delete download
+Remove-Item "$InstallFile" -Force -ErrorAction SilentlyContinue | Out-Null
 
 # delete old driver files
 Remove-Item "$env:SystemDrive\NVIDIA" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
@@ -4084,6 +4091,7 @@ Remove-Item "$env:SystemDrive\DumpStack.log" -Force -ErrorAction SilentlyContinu
         ## c:\windows\system32\control.exe sysdm.cpl ,4
         ## rstrui
 
+try {
 # allow multiple restore points
 cmd /c "reg add `"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore`" /v `"SystemRestorePointCreationFrequency`" /t REG_DWORD /d `"0`" /f >nul 2>&1"
 
@@ -4095,6 +4103,7 @@ Checkpoint-Computer -Description "backup" -RestorePointType "MODIFY_SETTINGS" -E
 
 # revert allow multiple restore points
 cmd /c "reg delete `"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore`" /v `"SystemRestorePointCreationFrequency`" /f >nul 2>&1"
+} catch { }
 
         Write-Host "RESTARTING`n" -ForegroundColor Red
 
