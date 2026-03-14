@@ -2765,7 +2765,7 @@ $_.FeatureName -notlike '*ServerCore-Drivers-General*' -and
 # breaks windows server internet
 $_.FeatureName -notlike '*ServerCore-Drivers-General-WOW64*' -and
 # breaks windows server turn windows features on or off
-$_.Name -notlike '*Server-Gui-Mgmt*' -and
+$_.FeatureName -notlike '*Server-Gui-Mgmt*' -and
 # breaks windows server nvidia app
 $_.FeatureName -notlike '*WirelessNetworking*'
 } | ForEach-Object {
