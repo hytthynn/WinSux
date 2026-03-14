@@ -2719,6 +2719,8 @@ $_.Name -notlike '*windows.immersivecontrolpanel*'
         ## powershell -noexit -command "dism /online /get-capabilities /format:table"
 
 Get-WindowsCapability -Online | Where-Object {
+# breaks windows server turn windows features on or off
+$_.Name -notlike '*AzureArcSetup*' -and
 $_.Name -notlike '*Microsoft.Windows.Ethernet*' -and
 # windows 10
 $_.Name -notlike '*Microsoft.Windows.MSPaint*' -and
