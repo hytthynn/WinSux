@@ -1755,24 +1755,6 @@ E0,F6,C5,D5,0E,CA,50,00,00
 
 
 
-; EDGE
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
-"StartupBoostEnabled"=dword:00000000
-"HardwareAccelerationModeEnabled"=dword:00000000
-"BackgroundModeEnabled"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MicrosoftEdgeElevationService]
-"Start"=dword:00000004
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\edgeupdate]
-"Start"=dword:00000004
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\edgeupdatem]
-"Start"=dword:00000004
-
-
-
-
 ; NVIDIA
 ; disable nvidia tray icon
 [HKEY_CURRENT_USER\Software\NVIDIA Corporation\NvTray]
