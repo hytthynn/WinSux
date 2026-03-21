@@ -2838,7 +2838,7 @@ Start-Process "msiexec.exe" -ArgumentList "/x $guid /qn /norestart" -Wait -NoNew
 cmd /c "reg delete `"HKLM\SYSTEM\ControlSet001\Services\uhssvc`" /f >nul 2>&1"
 Unregister-ScheduledTask -TaskName PLUGScheduler -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
 
-# remove startup apps
+# remove 3rd party startup apps
         ## taskmgr /0 /startup
         ## ms-settings:startupapps
 cmd /c "reg delete `"HKCU\Software\Microsoft\Windows\CurrentVersion\RunNotification`" /f >nul 2>&1"
@@ -2859,6 +2859,20 @@ Remove-Item -Recurse -Force "$env:AppData\Microsoft\Windows\Start Menu\Programs\
 Remove-Item -Recurse -Force "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup" -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+
+# remove 3rd party scheduled tasks
+        ## taskschd.msc
+		## regedit HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree
+		## C:\Windows\System32\Tasks
+$treePath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree"
+Get-ChildItem $treePath | Where-Object { $_.PSChildName -ne "Microsoft" } | ForEach-Object {
+Run-Trusted "Remove-Item '$($_.PSPath)' -Recurse -Force"
+}
+
+$tasksPath = "$env:SystemRoot\System32\Tasks"
+Get-ChildItem $tasksPath | Where-Object { $_.Name -ne "Microsoft" } | ForEach-Object {
+Remove-Item $_.FullName -Recurse -Force
+}
 
         # FUNCTION SHOW-MENU
         function Show-Menu {
