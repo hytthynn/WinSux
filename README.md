@@ -12,7 +12,7 @@ iwr https://github.com/FR33THYFR33THY/WinSux/raw/refs/heads/main/WinSux.ps1 -use
 ```
 
 # Graphics
-- For DDU & Graphic scripts see
+- For DDU & Graphic scripts see<br>
 [Ultimate](<https://github.com/FR33THYFR33THY/Ultimate>)
 
 # Guide
