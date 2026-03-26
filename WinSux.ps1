@@ -45,8 +45,6 @@
         }
         }
 
-        Write-Host "youtube.com/FR3" -ForegroundColor White -NoNewline; Write-Host "3THY`n" -ForegroundColor Cyan
-
         Write-Host "7Z`n"
         ## explorer "https://www.7-zip.org"
 
