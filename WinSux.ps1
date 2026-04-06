@@ -37,7 +37,7 @@ IWR $url -OutFile "$dest\$filename"
 Start-Process -Wait "$env:SystemRoot\Temp\7zip.exe" -ArgumentList "/S"
 
 # set config for 7zip - associate all file types
-cmd /c "reg add `"HKEY_CURRENT_USER\Software\7-Zip\Options`" /v `"ContextMenu`" /t REG_DWORD /d `"4294967295`" /f >nul 2>&1"
+cmd /c "reg add `"HKEY_CURRENT_USER\Software\7-Zip\Options`" /v `"ContextMenu`" /t REG_DWORD /d `"259`" /f >nul 2>&1"
 cmd /c "reg add `"HKEY_CURRENT_USER\Software\7-Zip\Options`" /v `"CascadedMenu`" /t REG_DWORD /d `"0`" /f >nul 2>&1"
 
 # cleaner 7zip start menu shortcut path
