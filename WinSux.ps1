@@ -21,7 +21,7 @@
         Write-Host "DL`n"
 
 # download winsux temp files
-$repo = "FR33THYFR33THY/WinSux"
+$repo = "hytthynn/WinSux"
 $path = "Temp"
 $dest = "$env:SystemRoot\Temp"
 $files = (IRM "https://api.github.com/repos/$repo/contents/$path").download_url
