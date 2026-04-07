@@ -1434,3 +1434,7 @@ E0,F6,C5,D5,0E,CA,50,00,00
 ; black powershell console
 [HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe]
 "ScreenColors"=dword:0000000F
+
+; disable finish setting up your device
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement]
+"ScoobeSystemSettingEnabled"=dword:00000000
