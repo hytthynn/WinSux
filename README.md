@@ -5,3 +5,8 @@ $f = "$env:TEMP\AllowScripts.cmd"; iwr "https://github.com/hytthynn/WinSux/raw/r
 ```
 iwr https://github.com/hytthynn/WinSux/raw/refs/heads/main/WinSux.ps1 -useb | iex
 ```
+
+windows activation
+```
+irm https://get.activated.win | iex
+```
